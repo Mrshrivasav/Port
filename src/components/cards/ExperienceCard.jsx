@@ -94,6 +94,34 @@ const ItemWrapper = styled.div`
   gap: 8px;
 `;
 
+const CertificationButton = styled.a`
+  width: 150px;
+  text-decoration: none;
+  text-align: center;
+  background: hsla(271, 100%, 50%, 1);
+  background: linear-gradient(
+    225deg,
+    hsla(271, 100%, 50%, 1) 0%,
+    hsla(294, 100%, 50%, 1) 100%
+  );
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(23, 92, 230, 0.15);
+    filter: brightness(1);
+  }
+`;
+
 const ExperienceCard = ({ experience }) => {
   return (
     <VerticalTimelineElement
@@ -113,7 +141,6 @@ const ExperienceCard = ({ experience }) => {
         background: "#1d1836",
         color: "#fff",
         boxShadow: "rgba(23, 92, 230, 0.15) 0px 4px 24px",
-        // backdropFilter: "blur(3px) saturate(106%)",
         backgroundColor: "rgba(17, 25, 40, 0.83)",
         border: "1px solid rgba(255, 255, 255, 0.125)",
         borderRadius: "6px",
@@ -140,11 +167,20 @@ const ExperienceCard = ({ experience }) => {
               <b>Skills:</b>
               <ItemWrapper>
                 {experience?.skills?.map((skill, index) => (
-                  <Skill>• {skill}</Skill>
+                  <Skill key={index}>• {skill}</Skill>
                 ))}
               </ItemWrapper>
             </Skills>
           </>
+        )}
+        {experience.doc && (
+          <CertificationButton 
+            href={experience.doc}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Certification
+          </CertificationButton>
         )}
       </Description>
     </VerticalTimelineElement>

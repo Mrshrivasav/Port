@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import emailjs from "@emailjs/browser";
 import EarthCanvas from "../canvas/Earth";
 
 const Container = styled.div`
@@ -126,26 +125,38 @@ const ContactButton = styled.input`
 `;
 
 const Contact = () => {
-  const form = useRef();
+  const [formData, setFormData] = useState({
+    from_email: "",
+    from_name: "",
+    subject: "",
+    message: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    emailjs
-      .sendForm(
-        "service_tox7kqs",
-        "template_nv7k7mj",
-        form.current,
-        "SybVGsYS52j2TfLbi"
-      )
-      .then(
-        (result) => {
-          alert("Message Sent");
-          form.current.resut();
-        },
-        (error) => {
-          alert(error);
-        }
-      );
+    
+    // Create mailto link with pre-filled data
+    const mailtoLink = `mailto:amanshriwastava0@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      `Name: ${formData.from_name}\nEmail: ${formData.from_email}\n\nMessage:\n${formData.message}`
+    )}`;
+    
+    // Open default email client
+    window.location.href = mailtoLink;
+    
+    // Clear form
+    setFormData({
+      from_email: "",
+      from_name: "",
+      subject: "",
+      message: ""
+    });
   };
 
   return (
@@ -158,10 +169,35 @@ const Contact = () => {
         </Desc>
         <ContactForm onSubmit={handleSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Message" name="message" rows={4} />
+          <ContactInput 
+            placeholder="Your Email" 
+            name="from_email" 
+            value={formData.from_email}
+            onChange={handleChange}
+            required
+          />
+          <ContactInput 
+            placeholder="Your Name" 
+            name="from_name" 
+            value={formData.from_name}
+            onChange={handleChange}
+            required
+          />
+          <ContactInput 
+            placeholder="Subject" 
+            name="subject" 
+            value={formData.subject}
+            onChange={handleChange}
+            required
+          />
+          <ContactInputMessage 
+            placeholder="Message" 
+            name="message" 
+            rows={4} 
+            value={formData.message}
+            onChange={handleChange}
+            required
+          />
           <ContactButton type="submit" value="Send" />
         </ContactForm>
       </Wrapper>
