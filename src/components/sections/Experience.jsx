@@ -50,18 +50,55 @@ const Desc = styled.div`
   }
 `;
 
+const CertificationButton = styled.a`
+  width: 200px;
+  text-decoration: none;
+  text-align: center;
+  background: hsla(271, 100%, 50%, 1);
+  background: linear-gradient(
+    225deg,
+    hsla(271, 100%, 50%, 1) 0%,
+    hsla(294, 100%, 50%, 1) 100%
+  );
+  background: -moz-linear-gradient(
+    225deg,
+    hsla(271, 100%, 50%, 1) 0%,
+    hsla(294, 100%, 50%, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    225deg,
+    hsla(271, 100%, 50%, 1) 0%,
+    hsla(294, 100%, 50%, 1) 100%
+  );
+  padding: 13px 16px;
+  margin: 20px auto;
+  border-radius: 12px;
+  border: none;
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 20px 20px 60px #1F2634;
+    filter: brightness(1);
+  }
+`;
+
 const Experience = () => {
   return (
     <Container id="Experience">
       <Wrapper>
-        <Title>Experience</Title>
+        <Title>Certifications</Title>
         <Desc
           style={{
             marginBottom: "40px",
           }}
         >
-          My work experience as a software engineer and working on different
-          companies and projects.
+          My professional certifications and achievements.
         </Desc>
 
         <VerticalTimeline>
@@ -69,9 +106,18 @@ const Experience = () => {
             <ExperienceCard
               key={`experience-${index}`}
               experience={experience}
+              isFirst={index === 0}
             />
           ))}
         </VerticalTimeline>
+
+        <CertificationButton 
+          href="https://drive.google.com/file/d/19agzwA-cXn4F_GTcMj4tPFsSITPvTInL/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Certification
+        </CertificationButton>
       </Wrapper>
     </Container>
   );
